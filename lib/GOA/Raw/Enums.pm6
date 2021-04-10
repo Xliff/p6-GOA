@@ -1,0 +1,44 @@
+use v6.c;
+
+use GLib::Raw::Definitions;
+
+unit package GOA::Raw::Enums;
+
+constant GoaError is export := guint32;
+our enum GoaErrorEnum is export <
+  GOA_ERROR_FAILED
+  GOA_ERROR_NOT_SUPPORTED
+  GOA_ERROR_DIALOG_DISMISSED
+  GOA_ERROR_ACCOUNT_EXISTS
+  GOA_ERROR_NOT_AUTHORIZED
+  GOA_ERROR_SSL
+>;
+
+constant GoaProviderFeatures is export := guint32;
+our enum GoaProviderFeaturesEnum is export (
+  GOA_PROVIDER_FEATURE_BRANDED    => 1 +<  1,
+  GOA_PROVIDER_FEATURE_MAIL       => 1 +<  2,
+  GOA_PROVIDER_FEATURE_CALENDAR   => 1 +<  3,
+  GOA_PROVIDER_FEATURE_CONTACTS   => 1 +<  4,
+  GOA_PROVIDER_FEATURE_CHAT       => 1 +<  5,
+  GOA_PROVIDER_FEATURE_DOCUMENTS  => 1 +<  6,
+  GOA_PROVIDER_FEATURE_PHOTOS     => 1 +<  7,
+  GOA_PROVIDER_FEATURE_FILES      => 1 +<  8,
+  GOA_PROVIDER_FEATURE_TICKETING  => 1 +<  9,
+  GOA_PROVIDER_FEATURE_READ_LATER => 1 +< 10,
+  GOA_PROVIDER_FEATURE_PRINTERS   => 1 +< 11,
+  GOA_PROVIDER_FEATURE_MAPS       => 1 +< 12,
+  GOA_PROVIDER_FEATURE_MUSIC      => 1 +< 13,
+  GOA_PROVIDER_FEATURE_TODO       => 1 +< 14,
+  GOA_PROVIDER_FEATURE_INVALID    =>       0,
+);
+
+constant GoaProviderGroup is export := guint32;
+our enum GoaProviderGroupEnum is export <
+  GOA_PROVIDER_GROUP_BRANDED
+  GOA_PROVIDER_GROUP_CONTACTS
+  GOA_PROVIDER_GROUP_MAIL
+  GOA_PROVIDER_GROUP_TICKETING
+  GOA_PROVIDER_GROUP_CHAT
+  GOA_PROVIDER_GROUP_INVALID
+>;
