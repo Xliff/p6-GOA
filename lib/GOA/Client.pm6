@@ -158,7 +158,7 @@ class GOA::Client {
       $raw,
       GoaObject,
       GOA::Object
-    );
+    ).grep( *.defined );
   }
 
   method get_manager (:$raw = False) is also<get-manager> {
