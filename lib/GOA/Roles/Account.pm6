@@ -7,12 +7,21 @@ use GOA::Raw::Account;
 
 use GLib::Class::Object;
 
+use GLib::Roles::Object;
 use GOA::Roles::Signals::Account;
 
 role GOA::Roles::Account {
+  also does GLib::Roles::Object;
   also does GOA::Roles::Signals::Account;
 
   has GoaAccount $!ga;
+
+  method roleInit-GoaAccount {
+    return if $!ga;
+
+    my \i = findProperImplementor(self.^attributes);
+    $!ga = cast( GoaAccount, i.get_value(self) )
+  }
 
   # Type: gboolean
   method attention-needed is rw  {
@@ -786,6 +795,43 @@ role GOA::Roles::Account {
     my gboolean $v = $value;
 
     goa_account_set_todo_disabled($!ga, $v);
+  }
+
+}
+
+our subset GoaAccountAncestry is export of Mu
+  where GoaAccount | GObject;
+
+class GOA::Account does GOA::Roles::Account {
+
+  submethod BUILD (:$account) {
+    self.setGoaAccount($account) if $account;
+  }
+
+  method setGoaAccount (GoaAccountAncestry $_) {
+    my $to-parent;
+
+    $!ga = do {
+      when GoaAccount {
+        $to-parent = cast(GObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(GoaAccount, $_);
+      }
+    }
+    self!setObject($to-parent);
+    self.roleInit-GoaAccount;
+  }
+
+  method new (GoaAccountAncestry $account, :$ref = True) {
+    return Nil unless $account;
+
+    my $o = self.bless( :$account );
+    $o.ref if $ref;
+    $o;
   }
 
 }
