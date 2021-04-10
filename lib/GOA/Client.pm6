@@ -7,12 +7,12 @@ use GOA::Raw::Types;
 use GOA::Raw::Client;
 
 use GLib::GList;
-use GOA::Object;
 
 use GLib::Roles::Object;
 use GIO::Roles::AsyncInitable;
 use GIO::Roles::Initable;
 use GIO::DBus::Roles::ObjectManager;
+use GOA::Roles::Object;
 
 our subset GoaClientAncestry is export of Mu
   where GoaClient | GInitable | GAsyncInitable | GObject;
