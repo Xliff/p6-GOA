@@ -93,19 +93,41 @@ role GOA::Roles::OAuth2Based {
     ;
   }
 
-  method call_get_access_token_sync (
-    CArray[Str]             $out_access_token,
-    gint                    $out_expires_in    is rw,
-    GCancellable()          $cancellable,
-    CArray[Pointer[GError]] $error             =  gerror
+  proto method call_get_access_token_sync (|)
+  { * }
+
+  multi method call_get_access_token_sync (
+    GCancellable()          $cancellable       = GCancellable,
+    CArray[Pointer[GError]] $error             = gerror
   ) {
-    goa_oauth2_based_call_get_access_token_sync(
+    (my $oat = CArray[Str].new)[0] = Str;
+
+    my $rv = samewith($oat, $, $cancellable, $error, :all);
+
+    $rv[0] ?? $rv[1] !! Nil;
+  }
+  multi method call_get_access_token_sync (
+    CArray[Str]             $out_access_token,
+                            $out_expires_in    is rw,
+    GCancellable()          $cancellable,
+    CArray[Pointer[GError]] $error             =  gerror,
+                            :$all              =  False
+  ) {
+    my gint $oei = 0;
+
+    clear_error;
+    my $rv = goa_oauth2_based_call_get_access_token_sync(
       $!goauth2,
       $out_access_token,
-      $out_expires_in,
+      $oei,
       $cancellable,
       $error
     );
+    set_error($error);
+
+    $out_expires_in = $oei;
+
+    $all.not ?? $rv !! ($rv, $out_expires_in);
   }
 
   method complete_get_access_token (
