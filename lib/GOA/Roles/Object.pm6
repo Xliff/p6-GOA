@@ -3,10 +3,13 @@ use v6.c;
 use GOA::Raw::Types;
 use GOA::Raw::Object;
 
+use GLib::Roles::Object;
 use GOA::Roles::Account;
 use GOA::Roles::OAuth2Based;
 
 role GOA::Roles::Object {
+  also does GLib::Roles::Object;
+
   has GoaObject $!go;
 
   method roleInit-GoaObject {
@@ -204,5 +207,42 @@ role GOA::Roles::Object {
   # method peek_todo (:$raw = False) {
   #   goa_object_peek_todo($!go);
   # }
+
+}
+
+our subset GoaObjectAncestry is export of Mu
+  where GoaObject | GObject;
+
+class GOA::Object does GOA::Roles::Object {
+
+  submethod BUILD (:$object) {
+    self.setGoaObject($object) if $object;
+  }
+
+  method setGoaObject (GoaObjectAncestry $_) {
+    my $to-parent;
+
+    $!go = do {
+      when GoaObject {
+        $to-parent = cast(GObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(GoaObject, $_);
+      }
+    }
+    self!setObject($to-parent);
+    self.roleInit-GoaObject;
+  }
+
+  method new (GoaObjectAncestry $object, :$ref = True) {
+    return Nil unless $object;
+
+    my $o = self.bless( :$object );
+    $o.ref if $ref;
+    $o;
+  }
 
 }
