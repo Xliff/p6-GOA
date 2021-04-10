@@ -1,23 +1,23 @@
 use v6.c;
 
 use GOA::Client;
-use GOA::OAuth2;
 
 sub MAIN {
   die 'Could not create GOA client!' unless (my $client = GOA::Client.new-sync);
 
   for $client.get-accounts[] {
-    say "{ .presentation-identity } at { .provider-name } ({ .provider-type })"
-      given (my $o = .get-account);
+    say "\n{ .presentation-identity } at { .provider-name } ({
+         .provider-type })"
+    given (my $o = .get_account);
 
-    if .oauth2-based -> $oa2 {
-      if $oa2.call-get-access-token-sync -> $at {
-        say "AccessToken: { $at }";
+    if .get_oauth2_based -> $oa2 {
+      if $oa2.call_get_access_token_sync -> $at {
+        say "AccessToken:  { $at }";
       }
 
       say qq:to/INFO/.chomp;
         ClientId:     { $oa2.client-id }
-        ClientSecret: { @oa2.client-secret }
+        ClientSecret: { $oa2.client-secret }
         INFO
     }
 
