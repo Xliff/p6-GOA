@@ -7,7 +7,13 @@ use GOA::Raw::OAuth2Based;
 
 use GLib::Class::Object;
 
+use GLib::Roles::Object;
+use GOA::Roles::Signals::OAuth2Based;
+
 role GOA::Roles::OAuth2Based {
+  also does GLib::Roles::Object;
+  also does GOA::Roles::Signals::OAuth2Based;
+
   has GoaOAuth2Based $!goauth2;
 
   method roleInit-GoaOAuth2Based {
@@ -159,6 +165,43 @@ role GOA::Roles::OAuth2Based {
 
   method set_client_secret (Str() $value) {
     goa_oauth2_based_set_client_secret($!goauth2, $value);
+  }
+
+}
+
+our subset GoaOAuth2BasedAncestry is export of Mu
+  where GoaOAuth2Based | GObject;
+
+class GOA::OAuth2Based does GOA::Roles::OAuth2Based {
+
+  submethod BUILD (:$oauth2) {
+    self.setGoaOAuth2($oauth2) if $oauth2;
+  }
+
+  method setGoaOAuth2 (GoaOAuth2BasedAncestry $_) {
+    my $to-parent;
+
+    $!goauth2 = do {
+      when GoaOAuth2Based {
+        $to-parent = cast(GObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(GoaOAuth2Based, $_);
+      }
+    }
+    self!setObject($to-parent);
+    self.roleInit-GoaOAuth2Based;
+  }
+
+  method new (GoaOAuth2BasedAncestry $oauth2, :$ref = True) {
+    return Nil unless $oauth2;
+
+    my $o = self.bless( :$oauth2 );
+    $o.ref if $ref;
+    $o;
   }
 
 }
