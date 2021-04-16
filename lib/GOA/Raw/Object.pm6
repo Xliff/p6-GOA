@@ -15,11 +15,11 @@ sub goa_object_get_account (GoaObject $object)
   is export
 { * }
 
-# sub goa_object_get_calendar (GoaObject $object)
-#   returns GoaCalendar
-#   is native(goa)
-#   is export
-# { * }
+sub goa_object_get_calendar (GoaObject $object)
+  returns GoaCalendar
+  is native(goa)
+  is export
+{ * }
 #
 # sub goa_object_get_chat (GoaObject $object)
 #   returns GoaChat

@@ -6,6 +6,7 @@ use GOA::Raw::Object;
 use GLib::Roles::Object;
 use GOA::Roles::Account;
 use GOA::Roles::OAuth2Based;
+use GOA::Roles::Calendar;
 
 role GOA::Roles::Object {
   also does GLib::Roles::Object;
@@ -22,18 +23,26 @@ role GOA::Roles::Object {
   method GOA::Raw::Definitions::GoaObject
   { $!go }
 
+  # All get_* methods are "Transfer: full"
+
   method get_account (:$raw = False) {
     my $a = goa_object_get_account($!go);
 
     $a ??
-      ( $raw ?? $a !! GOA::Account.new($a) )
+      ( $raw ?? $a !! GOA::Account.new($a, :!ref) )
       !!
       Nil;
   }
 
-  # method get_calendar (:$raw = False) {
-  #   goa_object_get_calendar($!go);
-  # }
+  method get_calendar (:$raw = False) {
+    my $c = goa_object_get_calendar($!go);
+
+    $c ??
+      ( $raw ?? $c !! GOA::Calendar.new($c, :!ref) )
+      !!
+      Nil;
+  }
+
   #
   # method get_chat (:$raw = False) {
   #   goa_object_get_chat($!go);
