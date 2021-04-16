@@ -161,7 +161,7 @@ role GOA::Roles::OAuth2Based {
     goa_oauth2_based_get_client_secret($!goauth2);
   }
 
-  method get_type {
+  method GoaAuth2Based_get_type (::?CLASS:U: ) {
     state ($n, $t);
 
     unstable_get_type( self.^name, &goa_oauth2_based_get_type, $t, $n );
@@ -224,6 +224,10 @@ class GOA::OAuth2Based does GOA::Roles::OAuth2Based {
     my $o = self.bless( :$oauth2 );
     $o.ref if $ref;
     $o;
+  }
+
+  method get_type (GOA::OAuth2Based:U: ) {
+    GOA::OAuth2Based.GoaOAuth2Based_get_type;
   }
 
 }
