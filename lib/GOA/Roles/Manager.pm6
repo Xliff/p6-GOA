@@ -73,7 +73,7 @@ role GOA::Roles::Manager {
     CArray[Pointer[GError]] $error
   ) {
     clear_error;
-    my $rv = goa_manager_call_add_account_finish(
+    my $rv = so goa_manager_call_add_account_finish(
       $!gm,
       $out_account_object_path,
       $res,
@@ -119,7 +119,7 @@ role GOA::Roles::Manager {
     (my $oaop = CArray[Str].new)[0] = Str;
 
     clear_error;
-    my $rv = goa_manager_call_add_account_sync(
+    my $rv = so goa_manager_call_add_account_sync(
       $arg_provider,
       $arg_identity,
       $arg_presentation_identity,
@@ -183,7 +183,7 @@ role GOA::Roles::Manager {
     my gboolean $o = 0;
 
     clear_error;
-    my $rv = goa_manager_call_is_supported_provider_finish(
+    my $rv = so goa_manager_call_is_supported_provider_finish(
       $!gm,
       $o,
       $res,
@@ -217,7 +217,7 @@ role GOA::Roles::Manager {
   ) {
     my gboolean $ois = 0;
     clear_error;
-    my $rv = goa_manager_call_is_supported_provider_sync(
+    my $rv = so goa_manager_call_is_supported_provider_sync(
       $!gm,
       $arg_provider_type,
       $ois,
@@ -265,7 +265,6 @@ role GOA::Roles::Manager {
     goa_manager_override_properties($klass, $p);
   }
 }
-
 
 our subset GoaManagerAncestry is export of Mu
   where GoaManager | GObject;
