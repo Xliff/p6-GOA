@@ -1,5 +1,5 @@
 prefix=GOA
 modules=GOA::Raw::Types
 backups=backup,bitbucket,google-backup
-hfile-prefix=G_DECLARE_FINAL_TYPE (GoaClient, goa_client, GOA, CLIENT, GObject)
+hfile-prefix='G_DECLARE_FINAL_TYPE (GoaClient, goa_client, GOA, CLIENT, GObject)'
 
