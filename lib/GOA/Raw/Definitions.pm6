@@ -2,7 +2,9 @@ use v6.c;
 
 use GLib::Raw::Definitions;
 
-constant goa = 'goa-1.0',v0;
+unit package GOA::Raw::Definitions;
+
+constant goa is export = 'goa-1.0',v0;
 
 class GoaAccount            is repr<CPointer> is export does GLib::Roles::Pointers { }
 class GoaAccountProxy       is repr<CPointer> is export does GLib::Roles::Pointers { }
