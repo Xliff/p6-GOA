@@ -227,7 +227,7 @@ class GOA::OAuth2Based does GOA::Roles::OAuth2Based {
   }
 
   method get_type (GOA::OAuth2Based:U: ) {
-    GOA::OAuth2Based.GoaOAuth2Based_get_type;
+    self.GOA::Roles::OAuth2Based::get_type;
   }
 
 }
