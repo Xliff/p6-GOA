@@ -14,6 +14,16 @@ role GOA::Roles::PasswordBased {
 
   has GoaPasswordBased $!gp;
 
+  method roleInit-GoaPasswordBased {
+    return if $!gp;
+
+    my \i = findProperImplementor(self.^attributes);
+    $!gp = cast( GoaPasswordBased, i.get_value(self) );
+  }
+
+  method GOA::Raw::Definitions::GoaPasswordBased
+  { $!gp }
+
   method interface_info (::?CLASS:U: ) {
     goa_password_based_interface_info();
   }
@@ -118,6 +128,47 @@ role GOA::Roles::PasswordBased {
     my guint $p = 0;
 
     goa_password_based_override_properties($klass, $p);
+  }
+
+}
+
+our subset GoaPasswordBasedAncestry is export of Mu
+  where GoaPasswordBased | GObject;
+
+class GOA::PasswordBased does GOA::Roles::PasswordBased {
+
+  submethod BUILD (:$Password) {
+    self.setGoaPassword($Password) if $Password;
+  }
+
+  method setGoaPassword (GoaPasswordBasedAncestry $_) {
+    my $to-parent;
+
+    $!gp = do {
+      when GoaPasswordBased {
+        $to-parent = cast(GObject, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(GoaPasswordBased, $_);
+      }
+    }
+    self!setObject($to-parent);
+    self.roleInit-GoaPasswordBased;
+  }
+
+  method new (GoaPasswordBasedAncestry $Password, :$ref = True) {
+    return Nil unless $Password;
+
+    my $o = self.bless( :$Password );
+    $o.ref if $ref;
+    $o;
+  }
+
+  method get_type (GOA::PasswordBased:U: ) {
+    self.GOA::Roles::PasswordBased::get_type;
   }
 
 }
