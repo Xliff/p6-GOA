@@ -51,17 +51,17 @@ sub goa_object_get_calendar (GoaObject $object)
 #   is export
 # { * }
 #
-# sub goa_object_get_mail (GoaObject $object)
-#   returns GoaMail
-#   is native(goa)
-#   is export
-# { * }
-#
-# sub goa_object_get_manager (GoaObject $object)
-#   returns GoaManager
-#   is native(goa)
-#   is export
-# { * }
+sub goa_object_get_mail (GoaObject $object)
+  returns GoaMail
+  is native(goa)
+  is export
+{ * }
+
+sub goa_object_get_manager (GoaObject $object)
+  returns GoaManager
+  is native(goa)
+  is export
+{ * }
 #
 # sub goa_object_get_maps (GoaObject $object)
 #   returns GoaMaps
@@ -86,18 +86,18 @@ sub goa_object_get_oauth2_based (GoaObject $object)
   is native(goa)
   is export
 { * }
-#
+
 # sub goa_object_get_oauth_based (GoaObject $object)
 #   returns GoaOAuthBased
 #   is native(goa)
 #   is export
 # { * }
-#
-# sub goa_object_get_password_based (GoaObject $object)
-#   returns GoaPasswordBased
-#   is native(goa)
-#   is export
-# { * }
+
+sub goa_object_get_password_based (GoaObject $object)
+  returns GoaPasswordBased
+  is native(goa)
+  is export
+{ * }
 #
 # sub goa_object_get_photos (GoaObject $object)
 #   returns GoaPhotos
@@ -140,12 +140,12 @@ sub goa_object_peek_account (GoaObject $object)
   is native(goa)
   is export
 { * }
-#
-# sub goa_object_peek_calendar (GoaObject $object)
-#   returns GoaCalendar
-#   is native(goa)
-#   is export
-# { * }
+
+sub goa_object_peek_calendar (GoaObject $object)
+  returns GoaCalendar
+  is native(goa)
+  is export
+{ * }
 #
 # sub goa_object_peek_chat (GoaObject $object)
 #   returns GoaChat
@@ -177,17 +177,17 @@ sub goa_object_peek_account (GoaObject $object)
 #   is export
 # { * }
 #
-# sub goa_object_peek_mail (GoaObject $object)
-#   returns GoaMail
-#   is native(goa)
-#   is export
-# { * }
-#
-# sub goa_object_peek_manager (GoaObject $object)
-#   returns GoaManager
-#   is native(goa)
-#   is export
-# { * }
+sub goa_object_peek_mail (GoaObject $object)
+  returns GoaMail
+  is native(goa)
+  is export
+{ * }
+
+sub goa_object_peek_manager (GoaObject $object)
+  returns GoaManager
+  is native(goa)
+  is export
+{ * }
 #
 # sub goa_object_peek_maps (GoaObject $object)
 #   returns GoaMaps
@@ -212,18 +212,18 @@ sub goa_object_peek_oauth2_based (GoaObject $object)
   is native(goa)
   is export
 { * }
-#
+
 # sub goa_object_peek_oauth_based (GoaObject $object)
 #   returns GoaOAuthBased
 #   is native(goa)
 #   is export
 # { * }
-#
-# sub goa_object_peek_password_based (GoaObject $object)
-#   returns GoaPasswordBased
-#   is native(goa)
-#   is export
-# { * }
+
+sub goa_object_peek_password_based (GoaObject $object)
+  returns GoaPasswordBased
+  is native(goa)
+  is export
+{ * }
 #
 # sub goa_object_peek_photos (GoaObject $object)
 #   returns GoaPhotos

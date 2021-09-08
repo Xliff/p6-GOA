@@ -4,9 +4,13 @@ use GOA::Raw::Types;
 use GOA::Raw::Object;
 
 use GLib::Roles::Object;
+
 use GOA::Roles::Account;
-use GOA::Roles::OAuth2Based;
 use GOA::Roles::Calendar;
+use GOA::Roles::Mail;
+use GOA::Roles::Manager;
+use GOA::Roles::OAuth2Based;
+use GOA::Roles::PasswordBased;
 
 role GOA::Roles::Object {
   also does GLib::Roles::Object;
@@ -64,13 +68,24 @@ role GOA::Roles::Object {
   #   goa_object_get_files($!go);
   # }
   #
-  # method get_mail (:$raw = False) {
-  #   goa_object_get_mail($!go);
-  # }
-  #
-  # method get_manager (:$raw = False) {
-  #   goa_object_get_manager($!go);
-  # }
+  method get_mail (:$raw = False) {
+    returnObject(
+      goa_object_get_mail($!go),
+      $raw,
+      GoaMail,
+      GOA::Mail
+    );
+  }
+
+  method get_manager (:$raw = False) {
+    returnObject(
+      goa_object_get_manager($!go),
+      $raw,
+      GoaManager,
+      GOA::Manager
+    );
+  }
+
   #
   # method get_maps (:$raw = False) {
   #   goa_object_get_maps($!go);
@@ -94,12 +109,22 @@ role GOA::Roles::Object {
   }
 
   # method get_oauth_based (:$raw = False) {
-  #   goa_object_get_oauth_based($!go);
+  #   returnObject(
+  #     goa_object_get_oauth_based($!go),
+  #     $raw,
+  #     GoaOAuthBased,
+  #     GOA::OAuthBased
+  #   );
   # }
-  #
-  # method get_password_based (:$raw = False) {
-  #   goa_object_get_password_based($!go);
-  # }
+
+  method get_password_based (:$raw = False) {
+    returnObject(
+      goa_object_get_password_based($!go),
+      $raw,
+      GoaPasswordBased,
+      GOA::PasswordBased
+    );
+  }
   #
   # method get_photos (:$raw = False) {
   #   goa_object_get_photos($!go);
@@ -136,9 +161,14 @@ role GOA::Roles::Object {
       Nil;
   }
 
-  # method peek_calendar (:$raw = False) {
-  #   goa_object_peek_calendar($!go);
-  # }
+  method peek_calendar (:$raw = False) {
+    returnObject(
+      goa_object_peek_calendar($!go),
+      $raw,
+      GoaCalendar,
+      GOA::Calendar
+    );
+  }
   #
   # method peek_chat (:$raw = False) {
   #   goa_object_peek_chat($!go);
@@ -160,13 +190,23 @@ role GOA::Roles::Object {
   #   goa_object_peek_files($!go);
   # }
   #
-  # method peek_mail (:$raw = False) {
-  #   goa_object_peek_mail($!go);
-  # }
-  #
-  # method peek_manager (:$raw = False) {
-  #   goa_object_peek_manager($!go);
-  # }
+  method peek_mail (:$raw = False) {
+    returnObject(
+      goa_object_peek_mail($!go),
+      $raw,
+      GoaMail,
+      GOA::Mail
+    );
+  }
+
+  method peek_manager (:$raw = False) {
+    returnObject(
+      goa_object_peek_manager($!go),
+      $raw,
+      GoaManager,
+      GOA::Manager
+    );
+  }
   #
   # method peek_maps (:$raw = False) {
   #   goa_object_peek_maps($!go);
@@ -190,12 +230,22 @@ role GOA::Roles::Object {
   }
 
   # method peek_oauth_based (:$raw = False) {
-  #   goa_object_peek_oauth_based($!go);
+  #   returnObject(
+  #     goa_object_peek_oauth_based($!go),
+  #     $raw,
+  #     GoaOauthBased,
+  #     GOA::OAuthBased
+  #   );
   # }
-  #
-  # method peek_password_based (:$raw = False) {
-  #   goa_object_peek_password_based($!go);
-  # }
+
+  method peek_password_based (:$raw = False) {
+    returnObject(
+      goa_object_peek_password_based($!go),
+      $raw,
+      GoaPasswordBased,
+      GOA::PasswordBased
+    );
+  }
   #
   # method peek_photos (:$raw = False) {
   #   goa_object_peek_photos($!go);
