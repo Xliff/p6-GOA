@@ -69,8 +69,12 @@ role GOA::Roles::Object {
   # }
   #
   method get_mail (:$raw = False) {
-    returnObject(
-      goa_object_get_mail($!go),
+    my $mail = goa_object_get_mail($!go);
+
+    say "GoaMail: { $mail } ({ $mail.^name })" if $DEBUG;
+
+    propReturnObject(
+      $mail,
       $raw,
       GoaMail,
       GOA::Mail
